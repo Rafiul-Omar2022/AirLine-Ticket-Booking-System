@@ -1,4 +1,7 @@
-public class UserInfo {
+import java.util.ArrayList;
+import java.util.Objects;
+
+public class UserInfo implements Utility {
     private String name;
     private String email;
     private String phoneNumber;
@@ -51,5 +54,25 @@ public class UserInfo {
 
     public void setSeatNumber(String seatNumber) {
         this.seatNumber = seatNumber;
+    }
+
+    @Override
+    public boolean validateData(UserInfo data) {
+        int seatNumber = Integer.parseInt(data.getSeatNumber());
+        return (!Objects.equals(data.getName(), "")) &&
+                (!Objects.equals(data.getEmail(), "")) &&
+                (!Objects.equals(data.getAge(), "")) &&
+                (!Objects.equals(data.getPhoneNumber(), "")) &&
+                (!Objects.equals(data.getSeatNumber(), "") && (seatNumber >= 1 && seatNumber <= 52));
+    }
+
+    @Override
+    public boolean isReserved(ArrayList <UserInfo> data, String seatNumber) {
+        for(int i = 0; i < data.size(); i++) {
+            if(Objects.equals(data.get(i).getSeatNumber(), seatNumber)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

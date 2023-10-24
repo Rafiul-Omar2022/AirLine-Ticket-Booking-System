@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MyFrame implements ActionListener {
 
@@ -12,7 +13,8 @@ public class MyFrame implements ActionListener {
     static JButton[] seats = new JButton[60];
     JLabel leftTitle, name, age, email, phoneNumber, rightTitle, seatNumber;
     JTextField nameText, ageText, emailText, phoneNumberText, seatText;
-    JButton submit, viewData;
+    JButton submit, viewData, saveData, openFile;
+    UserInfo userInfo;
 
     MyFrame() {
        frame.setSize(new Dimension(800, 500));
@@ -35,6 +37,14 @@ public class MyFrame implements ActionListener {
         viewData.setPreferredSize(new Dimension(100, 30));
         viewData.addActionListener(this);
 
+        saveData = new JButton("SaveData");
+        saveData.setFocusable(false);
+        saveData.setPreferredSize(new Dimension(100, 30));
+
+        openFile = new JButton("OpenFile");
+        openFile.setFocusable(false);
+        openFile.setPreferredSize(new Dimension(100, 30));
+
        name = new JLabel("Name : ");
        email = new JLabel("Email : ");
        age = new JLabel("Age : ");
@@ -47,10 +57,10 @@ public class MyFrame implements ActionListener {
        phoneNumberText = new JTextField();
        seatText = new JTextField();
 
-       nameText.setPreferredSize(new Dimension(320,20));
-       emailText.setPreferredSize(new Dimension(320,20));
-       ageText.setPreferredSize(new Dimension(320,20));
-       phoneNumberText.setPreferredSize(new Dimension(260,20));
+       nameText.setPreferredSize(new Dimension(320,30));
+       emailText.setPreferredSize(new Dimension(320,30));
+       ageText.setPreferredSize(new Dimension(320,30));
+       phoneNumberText.setPreferredSize(new Dimension(260,30));
        seatText.setPreferredSize(new Dimension(120, 50));
 
        rightTitle = new JLabel("Fill The Form");
@@ -77,6 +87,8 @@ public class MyFrame implements ActionListener {
        panelRight.add(seatText);
        panelRight.add(submit);
        panelRight.add(viewData);
+       panelRight.add(saveData);
+       panelRight.add(openFile);
 
 
        panelLeft.add(leftTitle);
@@ -111,10 +123,15 @@ public class MyFrame implements ActionListener {
         }
     }
     public void setData() {
-        useData.add(new UserInfo(nameText.getText(), emailText.getText(), ageText.getText(), phoneNumberText.getText(), seatText.getText()));
-        if(seatText.getText() != null) {
-            int number = Integer.parseInt(seatText.getText());
-            seats[number].setBackground(new Color(248, 23, 119));
+        userInfo = new UserInfo(nameText.getText(), emailText.getText(), ageText.getText(), phoneNumberText.getText(), seatText.getText());
+        if(userInfo.validateData(userInfo)) {
+            if(userInfo.isReserved(useData, seatText.getText())) {
+                useData.add(new UserInfo(nameText.getText(), emailText.getText(), ageText.getText(), phoneNumberText.getText(), seatText.getText()));
+                if(!Objects.equals(seatText.getText(), "")) {
+                    int number = Integer.parseInt(seatText.getText());
+                    seats[number].setBackground(new Color(248, 23, 119));
+                }
+            }
         }
     }
 

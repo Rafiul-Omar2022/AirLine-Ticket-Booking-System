@@ -1,23 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class ViewData extends JFrame{
 
     JFrame frame;
     JTable table;
     JScrollPane sp;
-    static int dataCount = 0;
     public ViewData(Image icon, ArrayList<UserInfo> data) {
         frame = new JFrame("User Data");
         frame.setIconImage(icon);
-        frame.setSize(400,400);
+        frame.setSize(750,400);
         frame.setLocationRelativeTo(null);
 
         String[] column = {"Name", "Email", "Age", "PhoneNumber", "SeatNumber"};
-        String[][] str = {{"", " ", " ", " ", " "}};
-        table = new JTable(dataFatch(data), column);
+        table = new JTable(this.dataFatch(data), column);
         table.setBounds(30,40,400,300);
         sp = new JScrollPane(table);
 
