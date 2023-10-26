@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -9,6 +10,8 @@ public class UserInfo implements Utility {
     private String age;
     private String seatNumber;
 
+
+    public UserInfo() {}
     public UserInfo(String name, String email, String age, String phoneNumber, String seatNumber) {
         this.name = name;
         this.email = email;
@@ -98,5 +101,23 @@ public class UserInfo implements Utility {
             }
         }
         return true;
+    }
+    @Override
+    public void saveData(ArrayList<UserInfo> data, JFrame frame) {
+        String filePath = "./src/database.txt";
+        File file = new File(filePath);
+
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            Writer output = new BufferedWriter(fileWriter);
+            int size = data.size();
+            for(int i = 0; i < size; i++) {
+                output.write(data.get(i).getName() + " " +data.get(i).getEmail() + " " + data.get(i).getAge() + " " + data.get(i).getPhoneNumber() + " " + data.get(i).getSeatNumber() + "\n");
+            }
+            output.close();
+            JOptionPane.showMessageDialog(frame, "The the information has been saved in database.txt file", "Saved", JOptionPane.PLAIN_MESSAGE);
+        } catch (Exception e) {
+            System.out.println("Cant write");
+        }
     }
 }
