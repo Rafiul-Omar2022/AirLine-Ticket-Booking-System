@@ -142,6 +142,7 @@ public class MyFrame implements ActionListener {
                 if(!Objects.equals(seatText.getText(), "")) {
                     int number = Integer.parseInt(seatText.getText());
                     seats[number].setBackground(new Color(248, 23, 119));
+                    this.setDefaultData();
                 }
             } else {
                 new ShowDialogue(seatText.getText() + " number seat is already reserved", "Seat Reserved");
@@ -153,5 +154,13 @@ public class MyFrame implements ActionListener {
         for (UserInfo useDatum : useData) {
             System.out.println(useDatum.getName() + " " + useDatum.getEmail() + " " + useDatum.getAge() + " " + useDatum.getPhoneNumber() + " " + useDatum.getSeatNumber());
         }
+    }
+
+    public void setDefaultData() {
+        nameText.setText("");
+        emailText.setText("");
+        ageText.setText("");
+        phoneNumberText.setText("");
+        seatText.setText("");
     }
 }
