@@ -7,13 +7,13 @@ import java.util.Objects;
 
 public class MyFrame implements ActionListener {
 
-    ArrayList<UserInfo> useData = new ArrayList<UserInfo>();
+    public ArrayList<UserInfo> useData = new ArrayList<>();
 
     JFrame frame = new JFrame();
     static JButton[] seats = new JButton[60];
     JLabel leftTitle, name, age, email, phoneNumber, rightTitle, seatNumber;
     JTextField nameText, ageText, emailText, phoneNumberText, seatText;
-    JButton submit, viewData, saveData, openFile, redBtn, greenBtn;
+    JButton submit, viewData, saveData, redBtn, greenBtn;
     UserInfo userInfo;
 
     MyFrame() {
@@ -40,10 +40,7 @@ public class MyFrame implements ActionListener {
         saveData = new JButton("SaveData");
         saveData.setFocusable(false);
         saveData.setPreferredSize(new Dimension(100, 30));
-
-        openFile = new JButton("OpenFile");
-        openFile.setFocusable(false);
-        openFile.setPreferredSize(new Dimension(100, 30));
+        saveData.addActionListener(this);
 
         redBtn = new JButton("Booked");
         redBtn.setPreferredSize(new Dimension(105,30));
@@ -99,7 +96,6 @@ public class MyFrame implements ActionListener {
        panelRight.add(submit);
        panelRight.add(viewData);
        panelRight.add(saveData);
-       panelRight.add(openFile);
 
 
        panelLeft.add(leftTitle);
@@ -132,6 +128,15 @@ public class MyFrame implements ActionListener {
         } else if (e.getSource() == viewData) {
             this.getViewData();
             new ViewData(titleIcon("./src/planeIcon.png"), useData);
+        } else if (e.getSource() == saveData) {
+            try {
+                if(useData.get(0).getName() != null) {
+                    new UserInfo().saveData(useData, frame);
+                }
+            } catch (Exception ea) {
+                JOptionPane.showMessageDialog(frame, "Empty list of information", "Empty list", JOptionPane.WARNING_MESSAGE);
+            }
+
         }
     }
     public void setData() {
