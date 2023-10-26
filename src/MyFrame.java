@@ -13,7 +13,7 @@ public class MyFrame implements ActionListener {
     static JButton[] seats = new JButton[60];
     JLabel leftTitle, name, age, email, phoneNumber, rightTitle, seatNumber;
     JTextField nameText, ageText, emailText, phoneNumberText, seatText;
-    JButton submit, viewData, saveData, openFile;
+    JButton submit, viewData, saveData, openFile, redBtn, greenBtn;
     UserInfo userInfo;
 
     MyFrame() {
@@ -45,6 +45,15 @@ public class MyFrame implements ActionListener {
         openFile.setFocusable(false);
         openFile.setPreferredSize(new Dimension(100, 30));
 
+        redBtn = new JButton("Booked");
+        redBtn.setPreferredSize(new Dimension(105,30));
+        redBtn.setBackground(new Color(248, 23, 119));
+        redBtn.setFocusable(false);
+        greenBtn = new JButton("Available");
+        greenBtn.setPreferredSize(new Dimension(105,30));
+        greenBtn.setBackground(new Color(147, 206, 148));
+        greenBtn.setFocusable(false);
+
        name = new JLabel("Name : ");
        email = new JLabel("Email : ");
        age = new JLabel("Age : ");
@@ -64,10 +73,12 @@ public class MyFrame implements ActionListener {
        seatText.setPreferredSize(new Dimension(120, 50));
 
        rightTitle = new JLabel("Fill The Form");
+       rightTitle.setFont(new Font("Roboto", Font.PLAIN,30));
        rightTitle.setPreferredSize(new Dimension(380, 100));
        rightTitle.setHorizontalTextPosition(JLabel.CENTER);
 
        leftTitle = new JLabel("Available Seats");
+       leftTitle.setFont(new Font("Roboto", Font.PLAIN,30));
        leftTitle.setPreferredSize(new Dimension(380, 100));
        leftTitle.setHorizontalTextPosition(JLabel.CENTER);
 
@@ -99,12 +110,13 @@ public class MyFrame implements ActionListener {
             seats[i].setPreferredSize(new Dimension(50,30));
             panelLeft.add(seats[i]);
        }
+       panelLeft.add(greenBtn);
+        panelLeft.add(redBtn);
 
        frame.add(panelLeft);
        frame.add(panelRight);
        frame.setResizable(false);
        frame.setVisible(true);
-//       frame.pack();
     }
 
 
@@ -131,13 +143,15 @@ public class MyFrame implements ActionListener {
                     int number = Integer.parseInt(seatText.getText());
                     seats[number].setBackground(new Color(248, 23, 119));
                 }
+            } else {
+                new ShowDialogue(seatText.getText() + " number seat is already reserved", "Seat Reserved");
             }
         }
     }
 
     public void getViewData() {
-        for(int i = 0; i < useData.size(); i++) {
-            System.out.println(useData.get(i).getName() + " " + useData.get(i).getEmail() + " " + useData.get(i).getAge() + " " + useData.get(i).getPhoneNumber() + " " +useData.get(i).getSeatNumber());
+        for (UserInfo useDatum : useData) {
+            System.out.println(useDatum.getName() + " " + useDatum.getEmail() + " " + useDatum.getAge() + " " + useDatum.getPhoneNumber() + " " + useDatum.getSeatNumber());
         }
     }
 }

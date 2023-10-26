@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -58,12 +59,35 @@ public class UserInfo implements Utility {
 
     @Override
     public boolean validateData(UserInfo data) {
-        int seatNumber = Integer.parseInt(data.getSeatNumber());
-        return (!Objects.equals(data.getName(), "")) &&
-                (!Objects.equals(data.getEmail(), "")) &&
-                (!Objects.equals(data.getAge(), "")) &&
-                (!Objects.equals(data.getPhoneNumber(), "")) &&
-                (!Objects.equals(data.getSeatNumber(), "") && (seatNumber >= 1 && seatNumber <= 52));
+        boolean check = false;
+        try {
+            int seatNumber = Integer.parseInt(data.getSeatNumber());
+            if (seatNumber >= 1 && seatNumber <= 52) {
+                try {
+                    int phoneNumber = Integer.parseInt(data.getPhoneNumber());
+                    try {
+                        int age = Integer.parseInt(data.getAge());
+                        if(Objects.equals(data.getName(), "") || Objects.equals(data.getEmail(), "")) {
+                            new ShowDialogue("Text field cannot be empty", "Empty text field");
+                        } else {
+                            return true;
+                        }
+
+                    } catch (Exception e) {
+                        new ShowDialogue("Age should be an integer", "Invalid Input");
+                    }
+
+                } catch (Exception e) {
+                    new ShowDialogue("Phone number cannot be empty or string", "Invalid Input");
+                }
+
+            } else {
+                new ShowDialogue("Seat number should be between 1 to 52", "Invalid Input");
+            }
+        } catch (Exception e) {
+            new ShowDialogue("Seat number cannot be empty or string", "Invalid Input");
+        }
+        return check;
     }
 
     @Override
